@@ -1,0 +1,24 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtualenvs
+venv/
+.venv/
+
+# Django
+# db.sqlite3
+# *.log
+# media/
+
+# Editor/OS
+.vscode/
+.idea/
+.DS_Store
+
+# Environment files
+.env
+
+#Anotações
+Anotações Flix API.txt
