@@ -3,6 +3,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    #Authentication
+    path('api/v1/', include('authentication.urls')),
     #Genres
     path('api/v1/', include('genres.urls')),
     #Actors
