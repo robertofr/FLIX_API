@@ -2,9 +2,10 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from movies.models import Movies
 
+
 class Review(models.Model):
     movie = models.ForeignKey(
-        Movies, 
+        Movies,
         on_delete=models.PROTECT,
         related_name='reviews'
     )
