@@ -44,7 +44,17 @@ python manage.py createsuperuser
 ```
 Siga as instruções e preencha as informações solicitadas.
 
-### 6. Executar o servidor de desenvolvimento
+### 6. Importar dados de atores (opcional)
+O projeto inclui um arquivo `actors.csv` com dados fictícios de atores para testes.
+
+Para importar os atores no banco de dados:
+```bash
+python manage.py import_actors actors.csv
+```
+
+Este comando criará 25 atores no banco de dados.
+
+### 7. Executar o servidor de desenvolvimento
 ```bash
 python manage.py runserver
 ```
@@ -59,7 +69,10 @@ flix-api/
 │   ├── models.py        # Modelo de ator
 │   ├── serializers.py   # Serializadores
 │   ├── views.py         # Views da API
-│   └── urls.py          # Rotas de atores
+│   ├── urls.py          # Rotas de atores
+│   └── management/      # Comandos personalizados
+│       └── commands/
+│           └── import_actors.py  # Comando para importar atores do CSV
 ├── genres/              # Aplicação de gêneros
 │   ├── models.py        # Modelo de gênero
 │   ├── serializers.py   # Serializadores
@@ -80,7 +93,8 @@ flix-api/
 │   ├── urls.py          # Rotas principais
 │   └── wsgi.py          # Configuração WSGI
 ├── manage.py            # Utilitário de gerenciamento do Django
-└── requirements.txt     # Dependências do projeto
+├── requirements.txt     # Dependências do projeto
+└── actors.csv           # Dados fictícios de atores para importação
 ```
 
 ## 🔧 Dependências
@@ -216,7 +230,37 @@ python manage.py shell
 
 # Executar testes
 python manage.py test
+
+# Importar atores de um arquivo CSV
+python manage.py import_actors <caminho_do_arquivo>
 ```
+
+## 📥 Importação de Dados
+
+### Importar Atores
+
+Você pode importar dados de atores a partir de um arquivo CSV usando o comando personalizado `import_actors`:
+
+```bash
+python manage.py import_actors actors.csv
+```
+
+**Formato do arquivo CSV:**
+
+O arquivo CSV deve conter as seguintes colunas:
+- `name`: Nome do ator (obrigatório)
+- `birthday`: Data de nascimento no formato YYYY-MM-DD (opcional)
+- `nationality`: Sigla do país em caixa alta (opcional)
+
+Exemplo:
+```csv
+name,birthday,nationality
+Tom Hanks,1956-07-09,US
+Meryl Streep,1949-06-22,US
+Leonardo DiCaprio,1974-11-11,US
+```
+
+O projeto já inclui um arquivo `actors.csv` com 25 atores fictícios para testes.
 
 ## 📄 Licença
 
