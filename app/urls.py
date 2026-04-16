@@ -1,7 +1,10 @@
 from django.contrib import admin
 from django.urls import path, include
+from app.views import admin_set_language
 
 urlpatterns = [
+    path('admin/lang/pt-br/', admin_set_language, {'language_code': 'pt-br'}, name='admin-language-ptbr'),
+    path('admin/lang/en/', admin_set_language, {'language_code': 'en'}, name='admin-language-en'),
     path('admin/', admin.site.urls),
 
     #Authentication

@@ -1,5 +1,7 @@
 from pathlib import Path
 from datetime import timedelta
+from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,6 +22,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'unfold',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,6 +43,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -100,7 +104,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
+
+LANGUAGES = [
+    ('pt-br', _('Portugues (Brasil)')),
+    ('en', _('English')),
+]
 
 TIME_ZONE = 'UTC'
 
@@ -124,4 +133,97 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=500),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=2),
+}
+
+
+UNFOLD = {
+    'SITE_TITLE': 'Flix API Admin',
+    'SITE_HEADER': 'Flix API',
+    'SITE_SUBHEADER': 'Painel administrativo',
+    'SITE_URL': '/',
+    'SITE_SYMBOL': 'movie',
+    'SITE_DROPDOWN': [
+        {
+            'icon': 'home',
+            'title': 'Voltar para o Admin',
+            'link': reverse_lazy('admin:index'),
+        },
+        {
+            'icon': 'language',
+            'title': 'Idioma: Portugues',
+            'link': reverse_lazy('admin-language-ptbr'),
+        },
+        {
+            'icon': 'language',
+            'title': 'Language: English',
+            'link': reverse_lazy('admin-language-en'),
+        },
+    ],
+    'SHOW_HISTORY': True,
+    'SHOW_VIEW_ON_SITE': True,
+    'SHOW_BACK_BUTTON': False,
+    'BORDER_RADIUS': '8px',
+    'SIDEBAR': {
+        'show_search': True,
+        'command_search': True,
+        'show_all_applications': False,
+        'navigation': [
+            {
+                'title': 'Navegacao',
+                'separator': True,
+                'collapsible': False,
+                'items': [
+                    {
+                        'title': 'Dashboard',
+                        'icon': 'dashboard',
+                        'link': reverse_lazy('admin:index'),
+                    },
+                ],
+            },
+            {
+                'title': 'Catalogo',
+                'separator': True,
+                'collapsible': True,
+                'items': [
+                    {
+                        'title': 'Filmes',
+                        'icon': 'theaters',
+                        'link': reverse_lazy('admin:movies_movies_changelist'),
+                    },
+                    {
+                        'title': 'Generos',
+                        'icon': 'category',
+                        'link': reverse_lazy('admin:genres_genre_changelist'),
+                    },
+                    {
+                        'title': 'Atores',
+                        'icon': 'groups',
+                        'link': reverse_lazy('admin:actors_actor_changelist'),
+                    },
+                    {
+                        'title': 'Reviews',
+                        'icon': 'reviews',
+                        'link': reverse_lazy('admin:reviews_review_changelist'),
+                    },
+                ],
+            },
+            {
+                'title': 'Seguranca',
+                'separator': True,
+                'collapsible': True,
+                'items': [
+                    {
+                        'title': 'Usuarios',
+                        'icon': 'person',
+                        'link': reverse_lazy('admin:auth_user_changelist'),
+                    },
+                    {
+                        'title': 'Grupos',
+                        'icon': 'shield',
+                        'link': reverse_lazy('admin:auth_group_changelist'),
+                    },
+                ],
+            },
+        ],
+    },
 }
